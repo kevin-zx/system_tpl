@@ -1,12 +1,11 @@
-package services
+package auth
 
 import (
 	"crypto/md5"
 	"fmt"
-	"gw_system/model"
 	"encoding/json"
-	"gw_system/core"
-	"gw_system/config"
+	"system_tpl/config"
+	"system_tpl/core"
 )
 
 func MD5(str string) string {
@@ -14,14 +13,15 @@ func MD5(str string) string {
 	return fmt.Sprintf("%x", has)
 }
 
+// 对用户进行验证
 func CheckUser(data []byte) map[string]interface{} {
-	user := model.User{}
+	user := User{}
 	err := json.Unmarshal(data, &user)
 
 	if err != nil {
 		return map[string]interface{}{"code":config.SystemErrCode,"message":"出现错误，请联系管理员"}
 	}
-	dbUser := model.User{}
+	dbUser := User{}
 	err = core.DB.Where("name = ?",user.Name).First(&dbUser).Error
 	if err != nil {
 

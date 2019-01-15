@@ -3,12 +3,9 @@ package config
 //数据库配置
 var Database  = map[string]interface{}{
 	"ENGINE":"mysql",
-	
-	//"HOST":"localhost",
 	"PORT":3306,
 	"NAME":"system", //数据库名称
 	"USER":"remote",
-	//"USER":"root",
 	"PASSWORD":"123456",
 }
 const SuccessCode = 20000

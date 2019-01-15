@@ -4,7 +4,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"fmt"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"gw_system/config"
+	"system_tpl/config"
 )
 
 var DB *gorm.DB

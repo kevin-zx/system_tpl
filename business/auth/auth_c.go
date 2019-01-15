@@ -1,14 +1,13 @@
-package controller
+package auth
 
 import (
 	"github.com/gin-gonic/gin"
-	"gw_system/services"
 	"fmt"
 )
 
 func Login(c *gin.Context)  {
 	data,_ := c.GetRawData()
-	result := services.CheckUser(data)
+	result := CheckUser(data)
 	c.JSON(200,result)
 }
 

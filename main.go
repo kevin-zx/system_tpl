@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"strings"
 	"net/http"
-	"gw_system/config"
-	"gw_system/core"
-	"gw_system/controller"
+	"system_tpl/core"
+	"system_tpl/config"
+	"system_tpl/business/auth"
 )
 
 
@@ -36,18 +36,18 @@ func LoadTaskRouter(router *gin.Engine) {
 		v1.Use(Cors())
 
 		//login
-		v1.OPTIONS("/user/login",controller.Login)
-		v1.POST("/user/login",controller.Login)
-		v1.GET("/user/info",controller.UserInfo)
+		v1.OPTIONS("/user/login",auth.Login)
+		v1.POST("/user/login",auth.Login)
+		v1.GET("/user/info",auth.UserInfo)
 		v1.OPTIONS("/user/info",)
 		v1.OPTIONS("/user/logout",)
 		v1.GET("/user/logout",)
-		v1.POST("/user/logout",controller.LogOut)
+		v1.POST("/user/logout",auth.LogOut)
 
 	}
 }
 
-
+// 允许跨域访问
 func Cors() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		method := c.Request.Method		//请求方法
