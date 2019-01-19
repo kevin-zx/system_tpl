@@ -15,4 +15,4 @@
 .idea/
 
 #屏蔽config
-./config/config.go
+config/config.go
