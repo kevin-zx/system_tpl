@@ -1,15 +1,14 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"fmt"
-	"strings"
+	"github.com/gin-gonic/gin"
 	"net/http"
-	"system_tpl/core"
-	"system_tpl/config"
+	"strings"
 	"system_tpl/business/auth"
+	"system_tpl/config"
+	"system_tpl/core"
 )
-
 
 func main() {
 	core.InitDB()
@@ -21,11 +20,8 @@ func main() {
 	//加载静态文件夹
 	//Router.Static("/public","./public")
 	//go xhstask.ManagerTasks(config.CrawlerApiHost,config.CrawlerApiVersion, config.CrawlerApiPath)
-	Router.Run(fmt.Sprintf("0.0.0.0:%d",config.Port))
+	Router.Run(fmt.Sprintf("0.0.0.0:%d", config.Port))
 }
-
-
-
 
 func LoadTaskRouter(router *gin.Engine) {
 	//xhsTask := controller.XhsTaskController{}
@@ -36,13 +32,13 @@ func LoadTaskRouter(router *gin.Engine) {
 		v1.Use(Cors())
 
 		//login
-		v1.OPTIONS("/user/login",auth.Login)
-		v1.POST("/user/login",auth.Login)
-		v1.GET("/user/info",auth.UserInfo)
-		v1.OPTIONS("/user/info",)
-		v1.OPTIONS("/user/logout",)
-		v1.GET("/user/logout",)
-		v1.POST("/user/logout",auth.LogOut)
+		v1.OPTIONS("/user/login", auth.Login)
+		v1.POST("/user/login", auth.Login)
+		v1.GET("/user/info", auth.UserInfo)
+		v1.OPTIONS("/user/info")
+		v1.OPTIONS("/user/logout")
+		v1.GET("/user/logout")
+		v1.POST("/user/logout", auth.LogOut)
 
 	}
 }
@@ -50,9 +46,9 @@ func LoadTaskRouter(router *gin.Engine) {
 // 允许跨域访问
 func Cors() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		method := c.Request.Method		//请求方法
-		origin := c.Request.Header.Get("Origin")		//请求头部
-		var headerKeys []string								// 声明请求头keys
+		method := c.Request.Method               //请求方法
+		origin := c.Request.Header.Get("Origin") //请求头部
+		var headerKeys []string                  // 声明请求头keys
 		for k, _ := range c.Request.Header {
 			headerKeys = append(headerKeys, k)
 		}
@@ -64,15 +60,15 @@ func Cors() gin.HandlerFunc {
 		}
 		if origin != "" {
 			c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-			c.Header("Access-Control-Allow-Origin", "*")		// 这是允许访问所有域
-			c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE,UPDATE")		//服务器支持的所有跨域请求的方法,为了避免浏览次请求的多次'预检'请求
+			c.Header("Access-Control-Allow-Origin", "*")                                       // 这是允许访问所有域
+			c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE,UPDATE") //服务器支持的所有跨域请求的方法,为了避免浏览次请求的多次'预检'请求
 			//  header的类型
 			c.Header("Access-Control-Allow-Headers", "x-token,Authorization, Content-Length, X-CSRF-Token, Token,session,X_Requested_With,Accept, Origin, Host, Connection, Accept-Encoding, Accept-Language,DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Pragma")
 			//				允许跨域设置																										可以返回其他子段
-			c.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma,FooBar")		// 跨域关键设置 让浏览器可以解析
-			c.Header("Access-Control-Max-Age", "172800")		// 缓存请求信息 单位为秒
-			c.Header("Access-Control-Allow-Credentials", "false")		//	跨域请求是否需要带cookie信息 默认设置为true
-			c.Set("content-type", "application/json")		// 设置返回格式是json
+			c.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers,Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma,FooBar") // 跨域关键设置 让浏览器可以解析
+			c.Header("Access-Control-Max-Age", "172800")                                                                                                                                                           // 缓存请求信息 单位为秒
+			c.Header("Access-Control-Allow-Credentials", "false")                                                                                                                                                  //	跨域请求是否需要带cookie信息 默认设置为true
+			c.Set("content-type", "application/json")                                                                                                                                                              // 设置返回格式是json
 		}
 
 		//放行所有OPTIONS方法
@@ -80,6 +76,6 @@ func Cors() gin.HandlerFunc {
 			c.JSON(http.StatusOK, "Options Request!")
 		}
 		// 处理请求
-		c.Next()		//	处理请求
+		c.Next() //	处理请求
 	}
 }
